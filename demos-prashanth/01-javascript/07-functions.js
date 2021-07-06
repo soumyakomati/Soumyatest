@@ -14,3 +14,14 @@ const sum2 = function( x, y ) {
 };
 
 console.log( 'result  of sum2( 12, 13 ) = ', sum2( 12, 13 ) );
+
+console.clear();
+
+// const sum3 = ( x, y ) => {
+//     return x + y;
+// };
+const sum3 = ( x, y ) => x + y;
+console.log( 'result of sum3( 12, 13 ) = ', sum3( 12, 13 ) );
+
+const square = x => x * x;
+console.log( square( 12 ) );
