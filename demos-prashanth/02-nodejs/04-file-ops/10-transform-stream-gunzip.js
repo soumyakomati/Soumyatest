@@ -3,8 +3,8 @@ const path = require( 'path' );
 const { createGunzip } = require( 'zlib' );
 
 const gunzip = createGunzip();
-const rs = fs.createReadStream( path.join( __dirname, 'hello.copy.txt' ) );
-const ws = fs.createWriteStream( path.join( __dirname, 'hello.uncompressed.txt' ) );
+const rs = fs.createReadStream( path.join( __dirname, 'hello.txt.zip' ) );
+const ws = fs.createWriteStream( path.join( __dirname, 'hello.copy.txt' ) );
 
 rs.pipe( gunzip ).pipe( ws );
 

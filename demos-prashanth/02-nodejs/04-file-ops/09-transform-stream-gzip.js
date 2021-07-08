@@ -4,7 +4,7 @@ const { createGzip } = require( 'zlib' );
 
 const gzip = createGzip();
 const rs = fs.createReadStream( path.join( __dirname, 'hello.txt' ) );
-const ws = fs.createWriteStream( path.join( __dirname, 'hello.copy.txt' ) );
+const ws = fs.createWriteStream( path.join( __dirname, 'hello.txt.zip' ) );
 
 // more than reading a chunk and writing a chunk, and closing at last
 // handles backpressure (writing is slower than reading, and issuing the write() statament may not write to file immediately - we need to take feedback from write stream and pause and resume reading)
