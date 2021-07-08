@@ -28,10 +28,16 @@ const onError = err => {
 
 const onSuccess = data => {
     console.log( 'result is ', data );
-}
+};
+
+const onSuccess2 = data => {
+    console.log( 'square of result is ', data * data );
+};
 
 ee1.on( 'error', onError );
 ee2.on( 'error', onError );
 
 ee1.on( 'data', onSuccess );
+ee1.on( 'data', onSuccess2 );
+
 ee2.on( 'data', onSuccess );

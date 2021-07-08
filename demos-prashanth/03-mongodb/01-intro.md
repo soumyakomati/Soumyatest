@@ -1,0 +1,13 @@
+## MongoDB
+- Not structured data - not relational
+    - row (all fields exist) <=> document (unstructured - one of the documents may have one field value, and another may not have)
+    - Supports multi-valued attributes (array, objects as value)
+    - Example
+        - Instead of storing customer addresses in a separate table, we can (and would usually) store addresses in the customer collection (i.e. table) itself
+        - This way a lot of joins are avoided
+- Does not use SQL for querying - instead uses plain JS methods for querying
+- Built for scaling (NoSQL DBs)
+- Terminology
+    - Row <=> Document
+    - Table <=> Collection
+- Documents are stored in extended JSON format (JS objects) -> JSON text is converted to a binary format (BSON - Binary JSON)
