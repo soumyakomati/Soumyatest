@@ -2,7 +2,7 @@ const fs = require( 'fs' );
 const path = require( 'path' );
 
 // create a straw for writing little by little
-const ws = fs.createWriteStream( path.join( __dirname, 'output.txt' ) );
+const ws = fs.createWriteStream( path.join( __dirname, 'output.txt' )/*, { flag: 'a' } */  );
 
 ws.write( 'Line 1' );
 ws.write( '\n' );
