@@ -6,7 +6,7 @@ const http = require( 'http' );
 const server = http.createServer(( req, res ) => {
     // create a straw
     // const rs = fs.createReadStream( path.join( __dirname, '../../..', 'documents/lab-guides/Nodejs - Lab Guide.pdf' ), { encoding: 'utf8' } );
-    const rs = fs.createReadStream( path.join( __dirname, 'hell.txt' ), { encoding: 'utf8' } );
+    const rs = fs.createReadStream( path.join( __dirname, 'hello.txt' ), { encoding: 'utf8' } );
 
     // res.setHeader( 'Content-Disposition', 'attachment; filename="filename.pdf"' );
     // res.setHeader( 'Content-Type', 'application/pdf' );
