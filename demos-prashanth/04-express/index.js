@@ -34,9 +34,9 @@ app.use( express.urlencoded( { extended: false } ) );
 app.use( express.static( path.join( process.cwd(), 'public' ) ) );
 app.use( indexRouter );
 
-// app.use( '/data', ( req, res ) => {
-//     res.json( req.body );
-// });
+app.use( '/data', ( req, res ) => {
+    res.json( req.body );
+});
 
 // EXERCISE
 // sendFile( path.join( __dirname, ... ) ) on /contact
