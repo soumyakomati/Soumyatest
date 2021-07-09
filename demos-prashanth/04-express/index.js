@@ -4,7 +4,7 @@ const app = express();
 
 app.listen( 3000, ( err ) => {
     if( err ) {
-        console.log( error.message );
+        console.log( err.message );
         return;
     }
 
