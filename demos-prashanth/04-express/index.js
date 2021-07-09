@@ -1,3 +1,6 @@
+// connect to the DB at startup
+require( './data/init.js' ); 
+
 const express = require( 'express' );
 const path = require( 'path' );
 
