@@ -1,8 +1,10 @@
 const express = require( 'express' );
-const indexRouter = require( './routes/' ); // by default the index file is imported
-const loggerRouter = require( './middleware/logger' ); // by default the index file is imported
-const errorRouter = require( './middleware/error' ); // by default the index file is imported
 const path = require( 'path' );
+
+const indexRouter = require( './routes/' ); // by default the index file is imported
+const workshopsRouter = require( './routes/workshops' );
+const loggerRouter = require( './middleware/logger' );
+const errorRouter = require( './middleware/error' );
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.use( express.urlencoded( { extended: false } ) );
 
 app.use( express.static( path.join( process.cwd(), 'public' ) ) );
 app.use( indexRouter );
+app.use( '/workshops', workshopsRouter );
 
 app.use( errorRouter );
 
