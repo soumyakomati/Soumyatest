@@ -1,9 +1,18 @@
 const mongoose = require( 'mongoose' );
 const Workshop = mongoose.model( 'Workshop' );
 
+// GET /workshops?page=2&pageSize=5
 const getWorkshops = ( req, res, next ) => {
+    let { page, pageSize } = req.query;
+    page = +page;
+    pageSize = +pageSize;
+
     Workshop
-        .find(( err, results ) => {
+        .find( /* fliterClause */ )
+        .sort( { name: 'asc' } )
+        .skip( ( page - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec( ( err, results ) => {
             if( err ) {
                 err.status = 500;
                 next( err );
@@ -91,6 +100,43 @@ const patchWorkshop = ( req, res, next ) => {
         })
 };
 
+const postWorkshopMode = ( req, res, next ) => {
+    const body = req.body;
+    let workshops;
+
+    if( typeof body === 'string' ) {
+        workshops = [ body ];
+    } else if( body instanceof Array ) {
+        workshops = body;
+    } // else -> send an error (@todo)
+
+    const { id } = req.params;
+
+    const updateClause = {
+        $addToSet: {
+            modes: {
+                $each: workshops
+            }
+        }
+    };
+
+    Workshop
+        .findByIdAndUpdate( id, updateClause, { /*new: true*/ runValidators: true }, ( err, updatedWorkshop ) => {
+            if( err ) {
+                if( err instanceof mongoose.Error.ValidationError ) {
+                    err.status = 400; // Bad request
+                } else {
+                    err.status = 500; // Internal server error ( eg. DB connection issue)
+                }
+
+                next( err );
+                return;
+            }
+
+            res.json( updatedWorkshop );
+        })
+};
+
 const deleteWorkshop = ( req, res, next ) => {
     const { id } = req.params;
 
@@ -112,5 +158,6 @@ module.exports = {
     getWorkshopById,
     postWorkshop,
     patchWorkshop,
+    postWorkshopMode,
     deleteWorkshop
 };

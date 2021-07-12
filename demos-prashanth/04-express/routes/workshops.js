@@ -4,6 +4,7 @@ const {
     getWorkshopById,
     postWorkshop,
     patchWorkshop,
+    postWorkshopMode,
     deleteWorkshop
 } = require( '../controllers/workshops' );
 
@@ -13,6 +14,7 @@ router.get( '/', getWorkshops );
 router.get( '/:id', getWorkshopById );
 router.post( '/', postWorkshop );
 router.patch( '/:id', patchWorkshop );
+router.post( '/:id/modes', postWorkshopMode );
 router.delete( '/:id', deleteWorkshop );
 
 module.exports = router;

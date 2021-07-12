@@ -8,7 +8,10 @@ mongoose.set( 'useFindAndModify', false );
 // const connectionStr = 'mongodb://user:password@...'
 const connectionStr = 'mongodb://localhost:27017/dllWorkshopsDB';
 
-mongoose.connect( connectionStr, { useNewUrlParser: true, useUnifiedTopology: true } );
+mongoose.connect( connectionStr, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 mongoose.connection.on( 'open', () => {
     console.log( 'connected to the DB' );
