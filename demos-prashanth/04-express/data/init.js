@@ -2,6 +2,9 @@ const mongoose = require( 'mongoose' );
 
 require( '../models/Workshop' );
 
+mongoose.set( 'returnOriginal', false );
+mongoose.set( 'useFindAndModify', false );
+
 // const connectionStr = 'mongodb://user:password@...'
 const connectionStr = 'mongodb://localhost:27017/dllWorkshopsDB';
 

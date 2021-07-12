@@ -8,6 +8,7 @@ const indexRouter = require( './routes/' ); // by default the index file is impo
 const workshopsRouter = require( './routes/workshops' );
 const loggerRouter = require( './middleware/logger' );
 const errorRouter = require( './middleware/error' );
+const { pageNotFound, errorHandler } = require( './middleware/error' );
 
 const app = express();
 
@@ -24,7 +25,8 @@ app.use( express.static( path.join( process.cwd(), 'public' ) ) );
 app.use( indexRouter );
 app.use( '/workshops', workshopsRouter );
 
-app.use( errorRouter );
+app.use( pageNotFound );
+app.use( errorHandler );
 
 app.listen( 3000, ( err ) => {
     if( err ) {

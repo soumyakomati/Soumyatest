@@ -16,6 +16,14 @@ const getWorkshops = ( req, res, next ) => {
 
 const getWorkshopById = ( req, res, next ) => {
     const id = req.params.id;
+
+    // not a proper object id
+    if( id.length !== 24 ) {
+        const err = new Error( 'Workshop with matching id not found' );
+        err.status = 404;
+        next( err );
+        return;
+    }
     
     // similarly use query params
     // const id = req.query.x;
@@ -25,6 +33,14 @@ const getWorkshopById = ( req, res, next ) => {
         .findById( id, ( err, workshop ) => {
             if( err ) {
                 err.status = 500;
+                next( err );
+                return;
+            }
+
+            // if no matching id (hence no worshop is retrieved)
+            if( !workshop ) {
+                const err = new Error( 'Workshop with matching id not found' );
+                err.status = 404;
                 next( err );
                 return;
             }
@@ -39,7 +55,34 @@ const postWorkshop = ( req, res, next ) => {
     Workshop
         .create( workshop, ( err, updatedWorkshop ) => {
             if( err ) {
-                err.status = 500;
+                if( err instanceof mongoose.Error.ValidationError ) {
+                    err.status = 400; // Bad request
+                } else {
+                    err.status = 500; // Internal server error ( eg. DB connection issue)
+                }
+
+                next( err );
+                return;
+            }
+
+            // 201 is status code for "new resource is created"
+            res.status( 201 ).json( updatedWorkshop );
+        })
+};
+
+const patchWorkshop = ( req, res, next ) => {
+    const workshop = req.body;
+    const { id } = req.params;
+
+    Workshop
+        .findByIdAndUpdate( id, workshop, { /*new: true*/ runValidators: true }, ( err, updatedWorkshop ) => {
+            if( err ) {
+                if( err instanceof mongoose.Error.ValidationError ) {
+                    err.status = 400; // Bad request
+                } else {
+                    err.status = 500; // Internal server error ( eg. DB connection issue)
+                }
+
                 next( err );
                 return;
             }
@@ -48,8 +91,26 @@ const postWorkshop = ( req, res, next ) => {
         })
 };
 
+const deleteWorkshop = ( req, res, next ) => {
+    const { id } = req.params;
+
+    Workshop
+        .findByIdAndRemove( id, ( err ) => {
+            if( err ) {
+                err.status = 500; // Internal server error ( eg. DB connection issue)
+                next( err );
+                return;
+            }
+
+            // Use 204 for empty response
+            res.status( 204 ).send();
+        })
+};
+
 module.exports = {
     getWorkshops,
     getWorkshopById,
-    postWorkshop
+    postWorkshop,
+    patchWorkshop,
+    deleteWorkshop
 };
