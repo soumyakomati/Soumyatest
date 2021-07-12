@@ -6,6 +6,7 @@ const path = require( 'path' );
 
 const indexRouter = require( './routes/' ); // by default the index file is imported
 const workshopsRouter = require( './routes/workshops' );
+const authRouter = require( './routes/auth' );
 const loggerRouter = require( './middleware/logger' );
 const errorRouter = require( './middleware/error' );
 const { pageNotFound, errorHandler } = require( './middleware/error' );
@@ -23,6 +24,7 @@ app.use( express.urlencoded( { extended: false } ) );
 
 app.use( express.static( path.join( process.cwd(), 'public' ) ) );
 app.use( indexRouter );
+app.use( '/auth', authRouter );
 app.use( '/workshops', workshopsRouter );
 
 app.use( pageNotFound );

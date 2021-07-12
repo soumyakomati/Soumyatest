@@ -5,7 +5,7 @@ const Workshop = mongoose.model( 'Workshop' );
 // GET /workshops?page=2&pageSize=5&search=React
 // https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261
 // Promise.all(), Promise.race()
-const getWorkshops = async ( req, res, next ) => {
+const getWorkshops = ( req, res, next ) => {
     let { page, pageSize, search } = req.query;
     page = +page;
     pageSize = +pageSize;
@@ -16,26 +16,45 @@ const getWorkshops = async ( req, res, next ) => {
     }
 
     // "Promise" is a class, and exec() gives a Promise object (Promise is generated immediately and it represents a future value)
-    try {
-        // we await on a Promise (nothing else can be used)
-        const results = await Workshop
-            .find( filterClause )
-            .select( { name: true, modes: true, _id: false } )
-            .sort( { name: 'asc' } )
-            .skip( ( page - 1 ) * pageSize )
-            .limit( pageSize )
-            .exec();
+    Workshop
+        .find( filterClause )
+        .select( { name: true, modes: true, _id: false } )
+        .sort( { name: 'asc' } )
+        .skip( ( page - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec() // we get the Promise immediately
+        .then(results => { // we tell the promise object -> Hey, when you resolve (with proper value) call this function
+            // return Session
+            //     .find()
+            //     .exec() // a new promise
+                // do not attach the handlers for the new promise here
+                // .then(( res2 ) => {
 
-        const results2 = await Promise.resolve( results );
-        // const results2 = await Workshops.find( results ).exec();
-        const results3 = await Promise.resolve( results2 );
+                // })
+                // .catch(( err2 ) => {
 
-        res.json( results3 );
-    } catch( err ) {
-        err.status = 500;
-        next( err );
-        return;
-    }
+                // });
+
+            // // 
+            // function sds() {
+            //     return User.find()
+            // }
+
+            return Promise.resolve( results );
+
+            // return sds();
+        })
+        .then(( results2 ) => {
+            return Promise.resolve( results2 );
+        })
+        .then(( results3 ) => {
+            res.json( results3 );
+        })
+        .catch(err => {
+            err.status = 500;
+            next( err );
+            return;
+        });
 };
 
 const getWorkshopById = ( req, res, next ) => {

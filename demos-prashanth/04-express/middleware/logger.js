@@ -7,6 +7,7 @@ router.use( ( req, res, next ) => {
     res.locals.receivedDate = new Date();
     next();
     console.log( 'response is being sent 1' );
+    console.log( 'process.pid = ', process.pid );
 });
 
 router.use( function dateLogger( req, res, next ) {

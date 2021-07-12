@@ -1,6 +1,7 @@
 const mongoose = require( 'mongoose' );
 
 require( '../models/Workshop' );
+require( '../models/User' );
 
 mongoose.set( 'returnOriginal', false );
 mongoose.set( 'useFindAndModify', false );
