@@ -3,12 +3,18 @@ const Workshop = mongoose.model( 'Workshop' );
 
 // GET /workshops?page=2&pageSize=5
 const getWorkshops = ( req, res, next ) => {
-    let { page, pageSize } = req.query;
+    let { page, pageSize, search } = req.query;
     page = +page;
     pageSize = +pageSize;
 
+    let filterClause = {};
+    if( search ) { // { name: /Angular/i }
+        filterClause.name = new RegExp( search, 'i' );
+    }
+
     Workshop
-        .find( /* fliterClause */ )
+        .find( filterClause )
+        .select( { name: true, modes: true, _id: false } )
         .sort( { name: 'asc' } )
         .skip( ( page - 1 ) * pageSize )
         .limit( pageSize )
