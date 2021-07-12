@@ -13,4 +13,5 @@ mongoose.connection.on( 'open', () => {
 
 mongoose.connection.on( 'error', err => {
     console.log( 'unable to connect to the DB', err.message );
+    process.exit( 0 );
 });

@@ -39,3 +39,4 @@
 
 ### Miscelleneous
 - [Find out process occupying a port on Mac OSX system](https://stackoverflow.com/questions/3855127/find-and-kill-process-locking-port-3000-on-mac)
+- [Learn Redis](https://try.redis.io/)
