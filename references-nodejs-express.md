@@ -1,6 +1,7 @@
 # References
 - [Workshops List](https://vw-angular.s3.ap-south-1.amazonaws.com/index.html)
 - [Hosting your Node.js + MongoDB app using Heroku + MongoDB Atlas](https://www.one-tab.com/page/RFHx6MIfT1-B0N6ZDH6XvA)
+- [Event Emitter / Event Bus in JavaScript - A Design Pattern](https://pierfrancesco-soffritti.medium.com/create-a-simple-event-bus-in-javascript-8aa0370b3969#:~:text=What's%20an%20event%20bus,to%20know%20the%20event%20bus.)
 
 ## Node JS
 
