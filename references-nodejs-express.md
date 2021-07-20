@@ -41,4 +41,6 @@
 
 ### Miscelleneous
 - [Find out process occupying a port on Mac OSX system](https://stackoverflow.com/questions/3855127/find-and-kill-process-locking-port-3000-on-mac)
+- [Installing Redis and getting started](https://redis.io/topics/quickstart)
 - [Learn Redis](https://try.redis.io/)
+- [Using Redix with Node.js (node_redis)](https://docs.redislabs.com/latest/rs/references/client_references/client_nodejs/)
