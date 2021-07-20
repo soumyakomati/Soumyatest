@@ -40,6 +40,8 @@ const getWorkshops = ( req, res, next ) => {
             //     return User.find()
             // }
 
+            // Example of how to wait on further async calls...
+            // the following 2 then handlers are rather unnecessary and are added for demo purpose
             return Promise.resolve( results );
 
             // return sds();

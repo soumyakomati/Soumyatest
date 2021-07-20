@@ -64,30 +64,36 @@ const login = ( req, res, next ) => {
                 }
             }
 
-            if( credentials.password !== result.password ) {
-                const error = err || new Error( 'credentials do not match' );
-                error.status = 401;
-                return next( error );
-            }
-
-            const claims = {
-                email: result.email,
-                name: result.name,
-                roles: result.roles
-            };
-
-            // shhh... -> a secret that should be stored in the environment variables (process.env.SOME_SECRET)
-            jwt.sign( claims, 'shhh...', { expiresIn: 24 * 60 * 60 }, ( error, token ) => {
-                if( error ) {
+            // check match of password
+            result.checkPassword( credentials.password, ( err, isMatch ) => {
+                if( err || !isMatch ) {
+                    const error = err || new Error( 'credentials do not match' );
                     error.status = 401;
                     return next( error );
                 }
 
-                res.status(200).json({
-                    message: 'Signed in sucessfully',
-                    token: token
+                const claims = {
+                    userId: result._id,
+                    name: result.name,
+                    email: result.email,
+                    roles: result.roles
+                };
+        
+                jwt.sign(claims, 'shhh...', { expiresIn: '24h' }, ( error, token ) => {
+                    if( error ) {
+                        error.status = 401;
+                        return next( error );
+                    }
+
+                    res.status(200).json({
+                        message: 'Signed in sucessfully',
+                        token: token,
+                        name: result.name,
+                        email: result.email,
+                        roles: result.roles
+                    });
                 });
-            });
+            })
         });
 };
 

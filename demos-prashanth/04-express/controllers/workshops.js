@@ -20,12 +20,14 @@ const getWorkshops = async ( req, res, next ) => {
         // we await on a Promise (nothing else can be used)
         const results = await Workshop
             .find( filterClause )
-            .select( { name: true, modes: true, _id: false } )
+            .select( { name: true, modes: true } )
             .sort( { name: 'asc' } )
             .skip( ( page - 1 ) * pageSize )
             .limit( pageSize )
             .exec();
 
+        // Example of how to use await to wait on further async calls...
+        // the following 2 async calls with await are rather unnecessary and are added for demo purpose
         const results2 = await Promise.resolve( results );
         // const results2 = await Workshops.find( results ).exec();
         const results3 = await Promise.resolve( results2 );
