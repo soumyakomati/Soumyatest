@@ -1,5 +1,9 @@
 const mongoose = require( 'mongoose' );
 const Workshop = mongoose.model( 'Workshop' );
+const redis = require( 'redis' );
+
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+const client = redis.createClient( REDIS_PORT );
 
 // NOTE: Ideally text searches are implemented using a MongoDB text index + text query (not using regular expression match)
 // GET /workshops?page=2&pageSize=5&search=React
@@ -71,7 +75,14 @@ const getWorkshopById = ( req, res, next ) => {
                 return;
             }
 
-            res.json( workshop );
+            // store workshop in the cache
+            client.setex( `workshops:${id}`, 5 * 60, JSON.stringify( workshop ) );
+
+            // send response
+            res.json({
+                message: 'non-cached data',
+                data: workshop
+            });
         })
 };
 
