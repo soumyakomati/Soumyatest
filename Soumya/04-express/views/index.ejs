@@ -1,0 +1,15 @@
+<!-- ! and enter -->
+<!DOCTYPE html>
+<html lang="en">
+    <%- include( 'partials/head', { title: 'Home' } ) -%>
+    <body>
+        <h1><%= name %></h1>
+        <ol>
+            <% techStack.forEach( item => { %>
+                <li><%= item %></li>
+            <% }); %>
+        </ol>
+
+        <script src="/js/index.js"></script>
+    </body>
+</html>
